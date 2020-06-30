@@ -1,0 +1,85 @@
+package net.zhaoqing.shopmall.service;
+
+import com.alibaba.fastjson.JSONObject;
+import net.zhaoqing.shopmall.pojo.Employee;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+//import org.elasticsearch.action.support.WriteRequest;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
+@Service
+public class ElasticsearchService {
+
+    @Autowired
+    private TransportClient eClient;
+
+    private String index="company";
+
+    private String type="employee";
+
+    public void add(Employee employee, boolean refreshNow) throws Exception {
+       // WriteRequest.RefreshPolicy refreshPolicy = refreshNow ? WriteRequest.RefreshPolicy.WAIT_UNTIL : WriteRequest.RefreshPolicy.NONE;
+        IndexResponse indexResponse = eClient.prepareIndex(index, type).setSource(
+                jsonBuilder().startObject()
+                        .field("id", employee.getId())
+                        .field("firstName", employee.getFirstName())
+                        .field("age", employee.getAge())
+
+                        .endObject())//.setRefreshPolicy(refreshPolicy)
+                .get();
+
+        if (indexResponse.status().getStatus() != RestStatus.CREATED.getStatus()) {
+            // new Exception("新增es关联关系失败");
+        }
+    }
+
+
+    /**
+     * @return
+     * @Author liujianqiang
+     * @Date 2019/6/11
+     * @Param
+     * @Description 查询码关联列表
+     **/
+    public List<Employee> getList(Employee esRelationcode) {
+        Integer current = 1;
+        Integer pageSize = 100;
+
+        List<Employee> relationcodeList = new ArrayList<Employee>();
+        SearchResponse searchResponse = eClient.prepareSearch(index)
+                .setTypes(type)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                //.setQuery(QueryBuilders.matchAllQuery()) //查询所有
+                .setQuery(boolQueryBuilder())
+                .setFrom(0)
+                .setSize(pageSize)
+
+                .get();
+        SearchHit[] hits = searchResponse.getHits().getHits();
+        for (SearchHit searchHit : hits) {
+            Employee esRelationcodeTem = JSONObject.parseObject(JSONObject.toJSONString(searchHit.getSourceAsMap()), Employee.class);
+            esRelationcodeTem.setEsId(searchHit.getId());
+            relationcodeList.add(esRelationcodeTem);
+        }
+        return relationcodeList;
+    }
+
+    private BoolQueryBuilder boolQueryBuilder() {
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        return boolQueryBuilder;
+    }
+
+
+}
