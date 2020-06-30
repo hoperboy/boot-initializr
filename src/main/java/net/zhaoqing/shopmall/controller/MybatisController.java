@@ -4,6 +4,7 @@ import net.zhaoqing.shopmall.pojo.Employee;
 import net.zhaoqing.shopmall.pojo.User;
 import net.zhaoqing.shopmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class MybatisController {
 
     private Integer id=1;
 
-    @RequestMapping("add")
+    @GetMapping("add")
     public String add() throws Exception {
 
         User user=new User();

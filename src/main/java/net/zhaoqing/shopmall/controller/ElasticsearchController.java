@@ -8,6 +8,7 @@ import net.zhaoqing.shopmall.pojo.Employee;
 //import net.zhaoqing.shopmall.service.ElasticsearchService;
 import net.zhaoqing.shopmall.pojo.GoodsESEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class ElasticsearchController {
      * 添加
      * @return
      */
-    @RequestMapping("add")
+    @GetMapping("add")
     public String add() throws Exception {
         Employee employee = new Employee();
         employee.setId((id++).toString());
@@ -49,7 +50,7 @@ public class ElasticsearchController {
         return "success";
     }
 
-    @RequestMapping("add2")
+    @GetMapping("add2")
     public String add2() throws Exception {
         GoodsESEntity goodsESEntity1 = new GoodsESEntity(id++, "尾灯 L 大众速腾bb", "国际品牌", "16D 945 095", "31231231", "16D 945 095",
                 "尾灯 L 大众速腾 国际品牌 16D 945 095 31231231 16D 945 095");
@@ -59,7 +60,7 @@ public class ElasticsearchController {
         return "success";
     }
 
-    @RequestMapping("getList")
+    @GetMapping("getList")
     public String getList(){
         /*List<Employee> list= esService.getList(null);
         String s= JSONObject.toJSONString(list);

@@ -3,6 +3,7 @@ package net.zhaoqing.shopmall.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import net.zhaoqing.shopmall.common.PageResult;
 import net.zhaoqing.shopmall.pojo.TUser;
 import net.zhaoqing.shopmall.dao.mybatisplus.TUserMapper;
@@ -22,17 +23,21 @@ import java.util.List;
  * @since 2020-06-30
  */
 @Service
+@Slf4j
 public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements ITUserService {
 
     @Override
     public String crud(String id){
         Serializable key = id;
         TUser user= baseMapper.selectById(key);
+        log.info("selectById");
 
         user.setName(user.getName()+"#abc");
         baseMapper.updateById(user);
+        log.info("updateById");
 
         baseMapper.deleteById(key);
+        log.info("deleteById");
 
         return "ok";
     }

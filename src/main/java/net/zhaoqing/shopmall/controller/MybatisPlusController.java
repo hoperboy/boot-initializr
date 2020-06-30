@@ -3,6 +3,8 @@ package net.zhaoqing.shopmall.controller;
 import net.zhaoqing.shopmall.pojo.User;
 import net.zhaoqing.shopmall.service.UserPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ public class MybatisPlusController {
 
     private Integer id=1;
 
-    @RequestMapping("add")
+    @GetMapping("add")
     public String add() throws Exception {
 
         User user=new User();
