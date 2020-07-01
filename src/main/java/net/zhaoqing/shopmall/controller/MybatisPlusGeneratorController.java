@@ -23,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/user/t-user")
 @Api(tags = "用户管理")
-public class UserController {
+public class MybatisPlusGeneratorController {
 
     @Autowired private ITUserService userService;
 

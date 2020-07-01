@@ -23,8 +23,8 @@ public class MybatisPlusController {
     public String add() throws Exception {
 
         User user=new User();
-        user.setId(UUID.randomUUID().toString());
-        user.setName("name"+(id++).toString());
+        //user.setId(UUID.randomUUID().toString());
+        user.setName("name"+UUID.randomUUID().toString());
         user.setAge(id*10);
         userPlusService.insert(user);
 
