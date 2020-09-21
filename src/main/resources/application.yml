@@ -1,12 +1,12 @@
 spring:
   application:
     name: shopmall
-#  elasticsearch:
-#    rest:
-#      uris:
-#        - http://34.96.251.173:9200
-#      username:
-#      password:
+  elasticsearch:
+    rest:
+      uris:
+        - http://34.96.251.173:9200
+      username:
+      password:
   cloud:
     consul:
       host: localhost
