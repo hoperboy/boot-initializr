@@ -1,10 +1,24 @@
 spring:
-  elasticsearch:
-    rest:
-      uris:
-        - http://34.96.251.173:9200
-      username:
-      password:
+  application:
+    name: shopmall
+#  elasticsearch:
+#    rest:
+#      uris:
+#        - http://34.96.251.173:9200
+#      username:
+#      password:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: true
+        serviceName: ${spring.application.name}
+        healthCheckPath: /product/get
+        instanceId: ${spring.application.name}
+        ip-address: ${spring.cloud.client.ipaddress}
+        prefer-ip-address: true
+
 
 server:
   port: 9090

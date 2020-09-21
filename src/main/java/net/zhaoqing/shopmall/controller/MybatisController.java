@@ -1,6 +1,5 @@
 package net.zhaoqing.shopmall.controller;
 
-import net.zhaoqing.shopmall.pojo.Employee;
 import net.zhaoqing.shopmall.pojo.User;
 import net.zhaoqing.shopmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
