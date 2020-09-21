@@ -8,10 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/mall/")
 public class RedisController {
 
     @Autowired private RedisService redisService;
+
+    @GetMapping("/")
+    public String get2(){
+        return "ok";
+    }
 
     @GetMapping("/get")
     public String get(){
